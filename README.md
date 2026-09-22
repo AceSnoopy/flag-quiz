@@ -1,5 +1,7 @@
 # Flag Quiz
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/AceSnoopy/flag-quiz)
+
 Guess the country from its flag: 10 rounds with 4 choices each, and a 0–5 star rating at the end. Correct answers earn coins, which you can spend in a store that sells every country's flag for your collection.
 
 Built with Flask. It uses SQLite locally and Postgres in production.
