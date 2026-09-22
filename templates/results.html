@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Results · Flag Quiz{% endblock %}
+{% set headlines = ["Keep practising!", "A start!", "Not bad!", "Nice work!", "Great job!", "Perfect score!"] %}
+{% block content %}
+<section class="results card">
+  <p class="muted">Game over</p>
+  <h1>{{ headlines[res.stars] }}</h1>
+  <div class="stars-lg" aria-label="{{ res.stars }} out of 5 stars">
+    {% for i in range(5) %}<span class="star {{ 'on' if i < res.stars }}" style="--i: {{ i }}">★</span>{% endfor %}
+  </div>
+  <p class="big-score">{{ res.score }}<span>/{{ rounds }}</span></p>
+  <p class="earned"><span class="coin"></span> +{{ res.coins_earned }} coins{% if res.score == rounds %} <span class="muted">(includes perfect bonus!)</span>{% endif %}</p>
+  <div class="actions">
+    <form method="post" action="{{ url_for('quiz_start') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <button class="btn btn-primary" type="submit">Play again</button>
+    </form>
+    <a class="btn btn-secondary" href="{{ url_for('store') }}">Go to store</a>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Round recap</h2>
+  <ol class="recap">
+    {% for r in recap %}
+    {% set ok = r.pick == r.answer %}
+    <li class="{{ 'ok' if ok else 'miss' }}">
+      <img src="{{ flag_url(r.answer, 160) }}" alt="Flag of {{ COUNTRIES[r.answer].name }}">
+      <div>
+        <strong>{{ COUNTRIES[r.answer].name }}</strong>
+        {% if not ok %}<span class="muted small">You picked {{ COUNTRIES[r.pick].name }}</span>{% endif %}
+      </div>
+      <span class="mark">{{ '✓' if ok else '✗' }}</span>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Log in · Flag Quiz{% endblock %}
+{% block content %}
+<section class="auth-card card">
+  <div class="auth-flags" aria-hidden="true">
+    {% for c in ['jp', 'br', 'ca', 'za', 'se'] %}<img src="{{ flag_url(c, 80) }}" alt="">{% endfor %}
+  </div>
+  <h1>Welcome back</h1>
+  <p class="muted">Log in to play and keep your coins and flags.</p>
+  <form method="post" class="form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label>Username <input name="username" required autocomplete="username" autofocus></label>
+    <label>Password <input name="password" type="password" required autocomplete="current-password"></label>
+    <button class="btn btn-primary btn-block" type="submit">Log in</button>
+  </form>
+  <p class="muted small">New here? <a href="{{ url_for('register') }}">Create an account</a></p>
+</section>
+{% endblock %}

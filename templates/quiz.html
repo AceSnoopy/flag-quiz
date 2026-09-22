@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Round {{ round_num }} · Flag Quiz{% endblock %}
+{% block content %}
+<section class="quiz card">
+  <div class="quiz-head">
+    <span class="round-label">Round {{ round_num }} / {{ rounds }}</span>
+    <span class="score-label">Score: <strong>{{ score }}</strong></span>
+  </div>
+  <div class="progress"><div class="progress-bar" style="width: {{ ((round_num - 1) / rounds * 100)|round }}%"></div></div>
+
+  <h1 class="quiz-q">Which country's flag is this?</h1>
+  <div class="flag-frame">
+    <img src="{{ url_for('quiz_flag', q=quiz_id, r=round_num) }}" alt="Mystery flag">
+  </div>
+
+  <div class="options" id="options">
+    {% for o in options %}
+    <button class="option" type="button" data-code="{{ o.code }}"><span class="option-key">{{ 'ABCD'[loop.index0] }}</span>{{ o.name }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="quiz-foot">
+    <p class="feedback" id="feedback" aria-live="polite"></p>
+    <a class="btn btn-primary" id="next-btn" hidden>Next</a>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='quiz.js') }}"></script>
+{% endblock %}

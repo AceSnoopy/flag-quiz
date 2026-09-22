@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}My Collection · Flag Quiz{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <h1>My Collection</h1>
+    <p class="muted">{{ flags|length }} / {{ total }} flags collected</p>
+  </div>
+</section>
+<div class="progress progress-lg"><div class="progress-bar" style="width: {{ (flags|length / total * 100)|round(1) }}%"></div></div>
+
+{% if flags %}
+<div class="flag-grid">
+  {% for c in flags %}
+  <article class="flag-card card owned">
+    <div class="flag-thumb"><img src="{{ flag_url(c.code, 320) }}" alt="Flag of {{ c.name }}" loading="lazy"></div>
+    <h3>{{ c.name }}</h3>
+    <p class="muted small">{{ c.region }}</p>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<section class="card empty-state">
+  <p>You haven't collected any flags yet.</p>
+  <a class="btn btn-primary" href="{{ url_for('store') }}">Visit the store</a>
+</section>
+{% endif %}
+{% endblock %}
